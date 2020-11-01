@@ -292,6 +292,12 @@ dxil_spv_result dxil_spv_parse_dxil_blob(const void *data, size_t size, dxil_spv
 		return DXIL_SPV_ERROR_PARSER;
 	}
 
+	if (parser.get_blob().size() == 0)
+	{
+		delete parsed;
+		return DXIL_SPV_ERROR_INVALID_DXIL;
+	}
+	
 	parsed->dxil_blob = std::move(parser.get_blob());
 
 	if (!parsed->bc.parse(parsed->dxil_blob.data(), parsed->dxil_blob.size()))
